@@ -6,8 +6,8 @@ Useful when spawning command-line tools.
 
 ## Install
 
-```
-$ npm install dargs
+```sh
+npm install dargs
 ```
 
 ## Usage
@@ -181,15 +181,3 @@ console.log(dargs({fooBar: 'baz'}));
 console.log(dargs({fooBar: 'baz'}, {allowCamelCase: true}));
 //=> ['--fooBar', 'baz']
 ```
-
----
-
-<div align="center">
-	<b>
-		<a href="https://tidelift.com/subscription/pkg/npm-dargs?utm_source=npm-dargs&utm_medium=referral&utm_campaign=readme">Get professional support for this package with a Tidelift subscription</a>
-	</b>
-	<br>
-	<sub>
-		Tidelift helps make open source sustainable for maintainers while giving companies<br>assurances about security, maintenance, and licensing for their dependencies.
-	</sub>
-</div>
