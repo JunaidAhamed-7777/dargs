@@ -74,6 +74,49 @@ test('useEquals options', t => {
 	]);
 });
 
+test('preserves empty string values with equals', t => {
+	t.deepEqual(dargs({message: '', m: '', enabled: true, disabled: false, count: 0}), [
+		'--message=',
+		'-m=',
+		'--enabled',
+		'--no-disabled',
+		'--count=0'
+	]);
+});
+
+test('preserves empty string values as separate arguments', t => {
+	t.deepEqual(dargs({message: '', m: '', enabled: true, disabled: false, count: 0}, {useEquals: false}), [
+		'--message',
+		'',
+		'-m',
+		'',
+		'--enabled',
+		'--no-disabled',
+		'--count',
+		'0'
+	]);
+});
+
+test('preserves empty string values for aliases', t => {
+	t.deepEqual(dargs({message: '', enabled: true, disabled: false, count: 0}, {
+		aliases: {message: 'm', enabled: 'e', disabled: 'd', count: 'c'}
+	}), [
+		'-m',
+		'',
+		'-e',
+		'-no-d',
+		'-c',
+		'0'
+	]);
+});
+
+test('preserves empty string values in arrays', t => {
+	const object = {message: ['', 'hello', '']};
+	t.deepEqual(dargs(object), ['--message=', '--message=hello', '--message=']);
+	t.deepEqual(dargs(object, {useEquals: false}), ['--message', '', '--message', 'hello', '--message', '']);
+	t.deepEqual(dargs(object, {aliases: {message: 'm'}}), ['-m', '', '-m', 'hello', '-m', '']);
+});
+
 test('exclude options', t => {
 	t.deepEqual(dargs(fixture, {excludes: ['b', /^e$/, 'h', 'i']}), [
 		'-a=foo',

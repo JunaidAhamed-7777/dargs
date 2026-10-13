@@ -21,11 +21,11 @@ export default function dargs(object, options) {
 		key = prefix + theKey;
 
 		if (options.useEquals) {
-			arguments_.push(key + (value ? `=${value}` : ''));
+			arguments_.push(key + (value === undefined ? '' : `=${value}`));
 		} else {
 			arguments_.push(key);
 
-			if (value) {
+			if (value !== undefined) {
 				arguments_.push(value);
 			}
 		}
@@ -34,7 +34,7 @@ export default function dargs(object, options) {
 	const makeAliasArg = (key, value) => {
 		arguments_.push(`-${key}`);
 
-		if (value) {
+		if (value !== undefined) {
 			arguments_.push(value);
 		}
 	};
@@ -78,7 +78,7 @@ export default function dargs(object, options) {
 		}
 
 		if (value === true && !options.ignoreTrue) {
-			pushArguments(key, '');
+			pushArguments(key);
 		}
 
 		if (value === false && !options.ignoreFalse) {
